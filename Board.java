@@ -108,7 +108,7 @@ public class Board {
                 count = 0;
                 int direction = (int) (Math.random() * 4);
                 while (!placed) {
-                    if (count > 1000)
+                    if (count > 1000000)
                     {
                         System.out.println("Error! Impossible to find fields for \nship: " + ship.getName().toUpperCase() + ". Count : " + count);
                         shipList.remove(ship);
@@ -406,7 +406,8 @@ public class Board {
     public boolean isHitted(int numberDown, int numberAcross){
         int checkedField = board[numberDown][numberAcross];
         if((checkedField == 1) || (checkedField == 2) || (checkedField == 3) || (checkedField == 4)){
-            boardShots[numberDown][numberAcross] = (char) checkedField;
+            boardShots[numberDown][numberAcross] = Character.forDigit(checkedField, 16);
+            //boardShots[numberDown][numberAcross] = (char) checkedField;
             afterHitted(numberDown, numberAcross);
             return true;
         }
@@ -424,7 +425,8 @@ public class Board {
             for(int j = 0; j < shipList.get(i).getShipPositionDown().size(); j++){
                 if(numberDown == shipList.get(i).getShipPositionDown(j)){
                     if(numberAcross == shipList.get(i).getShipPositionAcross(j)){
-                       boardShots[numberDown][numberAcross] = (char) shipList.get(i).getSize();
+                       boardShots[numberDown][numberAcross] = Character.forDigit(shipList.get(i).getSize(),10);
+                       //boardShots[numberDown][numberAcross] = (char) shipList.get(i).getSize();
                        int size = shipList.get(i).getShipPositionDown().size();
                        if(size == 1)
                        {
@@ -436,7 +438,7 @@ public class Board {
                        }
                        if(size > 1){
                            System.out.println("Lucky you! " + shipList.get(i).getName() + " is hitted!");
-                           System.out.println("You need hit it " + (shipList.get(i).getShipPositionDown().size() - 1) +
+                           System.out.println("You need to hit it " + (shipList.get(i).getShipPositionDown().size() - 1) +
                                    " more time to wreck it completely.");
                            System.out.println("It was your " + shotList.size() + " shot.");
                            shipList.get(i).removePosition(j);
